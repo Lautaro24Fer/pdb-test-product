@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PP Images client</title>
+</head>
+<body class="bg-gray-200 h-screen w-screen flex justify-center">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <main class="bg-white w-[40rem] px-[1rem] shadow overflow-y-auto">
+    <header>
+      <h1 class="font-bold text-[2rem]">Padel Point Images Client</h1>
+    </header>
+      <form  enctype="multipart/form-data" id="uploadProductForm" method="post" class="flex flex-col gap-7">
+				<div class="w-full flex gap-5">
+          <div class="w-[50%] flex flex-col gap-3">
+            <label for="productName">Nombre del Producto:</label>
+          <input class="bg-gray-100" type="text" id="productName" name="name" placeholder="Ingresa el nombre" required>
+      
+          <label for="productDescription">Descripción:</label>
+          <textarea class="bg-gray-100" id="productDescription" name="description" placeholder="Ingresa una descripción" rows="1" required></textarea>
+      
+          <label for="productPrice">Precio:</label>
+          <input class="bg-gray-100" type="number" id="productPrice" name="price" placeholder="Ingresa el precio" step="0.01" min="0" required>
+  
+          <label for="productIdProvider">Id provedor</label>
+          <input class="bg-gray-100" type="number" id="productIdProvider" name="supplierId" placeholder="Ingresa id provedor" min="0" required>
+          </div>
+  
+          <div class="w-[50%] flex flex-col gap-3">
+            <label for="productIdType">Id categoria</label>
+          <input class="bg-gray-100" type="number" id="productIdType" name="typeId" placeholder="Ingresa id catgoria" min="0" required>
+  
+          <label for="productIdBranch">Id Marca</label>
+          <input class="bg-gray-100" type="number" id="productIdBranch" name="brandId" placeholder="Ingresa id marca" min="0" required>
+      
+          <label for="productStock">Cantidad/Stock:</label>
+          <input class="bg-gray-100" type="number" id="productStock" name="stock" placeholder="Ingresa el stock" min="0" required>
+  
+          <label for="productPrice">Costo de envío:</label>
+          <input class="bg-gray-100" type="number" id="productPrice" name="shippingCost" placeholder="Ingresa el precio" step="0.01" min="0" required>
+      
+          <label for="image">Imagen:</label>
+          <input class="bg-gray-100" type="file" id="image" name="image" accept="image/*" enctype="multipart/form-data" required>
+          </div>
+        </div>
+		
+				<button class="bg-blue-300 text-white h-[3rem]" type="submit" id="uploadProductBtn">Cargar Producto</button>
+			</form>
+    </section>
+    <script>
+      const bodyForm = document.querySelector("#uploadProductForm");
+
+      bodyForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const form = new FormData(bodyForm);
+      const response = await fetch("http://localhost:3000/product", {
+        method: 'POST',
+        body: form
+      }).then((data) => data.json())
+        .catch((error) => {
+          console.error(error);
+        });
+
+      console.log("**RESPONSE**");
+      console.log(response);
+      console.log("__________________\n\n");
+    });
+    </script>
+  </main>
+</body>
+</html>
